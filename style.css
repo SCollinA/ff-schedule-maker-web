@@ -1,0 +1,36 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+*, ::before, ::after {
+    margin: 0;
+}
+
+.userOptions {
+    border-bottom: groove silver 10px;
+    background-color: aquamarine;
+    height: 25%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.userOption {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+
+}
+
+.scheduleResult {
+    flex: 1;
+    background-color: bisque;
+    overflow-y: scroll;
+}
