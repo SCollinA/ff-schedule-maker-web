@@ -8,23 +8,29 @@
     <title>Document</title>
 </head>
 <body>
-    <form class="userOptions">
-        <div class="userOption">
-            <label for="numTeams">Select number of teams 2-16</label>
-            <input type="number" name="numTeams" id="" min="2" max="16" step="2">
+    <div class="userForm">
+        <div class="userOptions">
+            <div class="userOption">
+                <label for="numTeams">Select number of teams 2-16</label>
+                <input type="number" name="numTeams" id="" min="2" max="16" step="2">
+            </div>
+            <div class="userOption">
+                <label for="numDivs">Select number of divisions</label>
+                <input type="number" name="numDivs" id="" min="2" max="8">
+            </div>
+            <div class="userOption">
+                <label for="numPlayoffWeeks">Select number of playoff weeks</label>
+                <input type="number" name="numPlayoffWeeks" id="" min="2" max="16">
+            </div>
         </div>
-        <div class="userOption">
-            <label for="numDivs">Select number of divisions</label>
-            <input type="number" name="numDivs" id="" min="2">
+        <div class="submitButton">
+            <button type="submit">Create Schedule!!!</button>
         </div>
-        <div class="userOption">
-            <label for="numPlayoffWeeks">Select number of playoff weeks</label>
-            <input type="number" name="numPlayoffWeeks" id="" min="2">
-        </div>
-    </form>
-    <div class="scheduleResult">
-
     </div>
+    <div class="scheduleResult">
+        
+    </div>
+    <script src="scheduler.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
