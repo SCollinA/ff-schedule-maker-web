@@ -57,7 +57,18 @@ function addGame(season) {
                 return false
             }
             console.log('Generating random game')
-            const randomGame = allGames[Math.floor(Math.random() * allGames.length)]
+            let randomGame = allGames[Math.floor(Math.random() * allGames.length)]
+            if (week.length == gamesPerWeek - 1) {
+                console.log('Week almost full...')
+                // debugger
+                randomGame = lastGameOfWeek(week, season)
+                if (allGames.includes(randomGame)) {
+                    randomGame = [randomGame[1], randomGame[0]]
+                    if (allGames.includes(randomGame)) {
+                        return false
+                    }
+                }
+            }
             // debugger
             // check game
             // take it out of possible games
@@ -81,13 +92,13 @@ function addGame(season) {
     console.log('Schedule complete!')
     console.log(schedule)
     // debugger
-    return schedule
+    return season
 }
 
 function findAllGames(teams) {
     console.log('Getting possible games...')
     let gamesArray = []
-    teams.forEach((team1, index, teams) => {
+    teams.forEach(team1 => {
         teams.forEach(team2 => {
             if (team1 != team2) {
                 gamesArray.push([team1, team2])
@@ -95,6 +106,19 @@ function findAllGames(teams) {
         })
     })
     return gamesArray
+}
+
+function lastGameOfWeek(week, season) {
+    console.log('Finding last game of week...')
+    // debugger
+    const league = season[1]
+    const teams = league.flatMap()
+    let scheduledTeams = []
+    week.forEach(game => {
+        teams.splice(game[0], 1)
+        teams.splice(game[1], 1)
+    })
+    return [teams[0], teams[1]]
 }
 
 function checkTeams(randomGame, week) {
