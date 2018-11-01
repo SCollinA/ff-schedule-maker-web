@@ -10,7 +10,7 @@ Array.prototype.flatMap = function(selector){
 
 function makeRandomSchedule(numTeams, numDivs, numPlayoffWeeks) {
     console.log('Making schedule...')
-    debugger
+    // debugger
     let schedule = []
     const numRegWeeks = 16 - numPlayoffWeeks
     const teams = createTeamsArray(numTeams)
@@ -26,21 +26,21 @@ function makeRandomSchedule(numTeams, numDivs, numPlayoffWeeks) {
     }
     const season = [schedule, league]
     console.log('Adding first game...')
-    debugger
+    // debugger
     return addGame(season)
 }
 
 function addGame(season) {
     console.log('Adding next game...')
-    debugger
+    // debugger
     const league = season[1]
     const teams = season[1].flatMap()
     const gamesPerWeek = teams.length / 2
     let schedule = season[0]
     let scheduledGames = schedule.flatMap()
     const allGames = findAllGames(teams).filter(game => {
-        console.log('Getting possible games')
-        debugger
+        console.log('Filtering possible game...')
+        // debugger
         if (!scheduledGames.includes(game)) {
             return true
         }
@@ -52,24 +52,24 @@ function addGame(season) {
             // if no games available (ie in all games but not scheduled or checked)
             if (allGames.length == 0) {
                 console.log('Bad schedule found. Returning...')
-                debugger
+                // debugger
                 // remove game
                 return false
             }
             console.log('Generating random game')
             const randomGame = allGames[Math.floor(Math.random() * allGames.length)]
-            debugger
+            // debugger
             // check game
             // take it out of possible games
-            allGames.splice(allGames.indexOf(randomGame))
+            allGames.splice(allGames.indexOf(randomGame), 1)
             if (checkGame(randomGame, season) && checkTeams(randomGame, week)) {
                 console.log('Good game found, adding game...')
-                debugger
+                // debugger
                 week.push(randomGame)
                 // if you cannot find a good path after this add
                 if (!addGame(season)) {
                     console.log('Removing last game...')
-                    debugger
+                    // debugger
                     // undo it and try again
                     week.pop(randomGame)
                 }
@@ -80,11 +80,12 @@ function addGame(season) {
     // else return false
     console.log('Schedule complete!')
     console.log(schedule)
-    debugger
+    // debugger
     return schedule
 }
 
 function findAllGames(teams) {
+    console.log('Getting possible games...')
     let gamesArray = []
     teams.forEach((team1, index, teams) => {
         teams.forEach(team2 => {
@@ -98,7 +99,7 @@ function findAllGames(teams) {
 
 function checkTeams(randomGame, week) {
     console.log('Checking teams...')
-    debugger
+    // debugger
     const homeTeam = randomGame[0]
     const awayTeam = randomGame[1]
     for (let i = 0; i < week.length; i++) {
@@ -112,7 +113,7 @@ function checkTeams(randomGame, week) {
 
 function checkGame(randomGame, season) {
     console.log('Checking game...')
-    debugger
+    // debugger
     // play everyone in div twice
     // play everyone else once
     const homeTeam = randomGame[0]
@@ -146,7 +147,7 @@ function checkGame(randomGame, season) {
 
 function isDivisional(game, league) {
     console.log('Checking divisional...')
-    debugger
+    // debugger
     for (let i = 0; i < league.length; i++) {
         if (league[i].includes(game[0]) && league[i].includes(game[0])) {
             return true
