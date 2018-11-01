@@ -40,11 +40,13 @@ function addGame(season) {
     let scheduledGames = schedule.flatMap()
     const allGames = findAllGames(teams).filter(game => {
         console.log('Filtering possible game...')
-        // debugger
-        if (!scheduledGames.includes(game)) {
-            return true
+        console.log(game)
+        if (hasGame(game, scheduledGames)) {
+            // debugger
+            return false
         }
-        return false
+        // debugger
+        return true
     })
     schedule.forEach(week => {
         while (week.length < gamesPerWeek) {
@@ -62,9 +64,16 @@ function addGame(season) {
                 console.log('Week almost full...')
                 // debugger
                 randomGame = lastGameOfWeek(week, season)
-                if (allGames.includes(randomGame)) {
+                // make that last game
+                // if that game is not in all games
+                if (!hasGame(randomGame, allGames)) {
+                    // debugger
+                    // make it a different one
                     randomGame = [randomGame[1], randomGame[0]]
-                    if (allGames.includes(randomGame)) {
+                    // if that game is not in all games
+                    if (!hasGame(randomGame, allGames)) {
+                        // debugger
+                        // this is a bad path
                         return false
                     }
                 }
@@ -113,11 +122,11 @@ function lastGameOfWeek(week, season) {
     // debugger
     const league = season[1]
     const teams = league.flatMap()
-    let scheduledTeams = []
-    week.forEach(game => {
-        teams.splice(game[0], 1)
-        teams.splice(game[1], 1)
-    })
+    for (let i = 0; i < week.length; i++) {
+        const game = week[i]
+        teams.splice(teams.indexOf(game[0]), 1)
+        teams.splice(teams.indexOf(game[1]), 1)
+    }
     return [teams[0], teams[1]]
 }
 
@@ -133,6 +142,18 @@ function checkTeams(randomGame, week) {
     }
     // teams have not played yet
     return true
+}
+
+function hasGame(game, scheduledGames) {
+    for (let i = 0; i < scheduledGames.length; i++) {
+        // if home team == home team and
+        // away team == away team, same game
+        if (game[0] == scheduledGames[i][0] &&
+            game[1] == scheduledGames[i][1]) {
+                return true
+        }
+    }
+    return false
 }
 
 function checkGame(randomGame, season) {
@@ -172,8 +193,11 @@ function checkGame(randomGame, season) {
 function isDivisional(game, league) {
     console.log('Checking divisional...')
     // debugger
+    const homeTeam = game[0]
+    const awayTeam = game[1]
     for (let i = 0; i < league.length; i++) {
-        if (league[i].includes(game[0]) && league[i].includes(game[0])) {
+        const division = league[i]
+        if (division.includes(homeTeam) && division.includes(awayTeam)) {
             return true
         }
     }
