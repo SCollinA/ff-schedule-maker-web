@@ -1,3 +1,6 @@
+// if the length of all games equals the length of the remaining games for a week
+// then if any of the games doesn't work, this is a bad path
+
 Array.prototype.flatMap = function(selector){
     let newArray = []
     this.forEach(item => {
@@ -8,22 +11,13 @@ Array.prototype.flatMap = function(selector){
     return newArray
 }
 
-const scheduleResult = document.getElementById('scheduleResult')
-
 function makeRandomSchedule(numTeams, numDivs, numPlayoffTeams) {
     console.log('Making schedule...')
     // debugger
+    // remove previous schedule, if any
+    // debugger
     let schedule = []
     const numRegWeeks = 16 - numPlayoffWeeks(numPlayoffTeams)
-    // add appropriate elements to page
-    for (let i = 0; i < numRegWeeks; i++) {
-        const weekResult = document.createElement('div.weekResult')
-        for (let i = 0; i < (numTeams / 2); i++) {
-            const gameResult = document.createElement('div.gameResult')
-            weekResult.appendChild(gameResult)
-        }
-        scheduleResult.appendChild(weekResult)
-    }
     const teams = createTeamsArray(numTeams)
     const divisions = createDivsArray(numDivs)
     const league = createLeague(teams, divisions)
@@ -46,16 +40,15 @@ function addGame(season) {
     let schedule = season[0]
     let scheduledGames = schedule.flatMap()
     const allGames = findAllGames(teams).filter(game => {
-        console.log('Filtering possible game...')
+        // console.log('Filtering possible game...')
         // if the game is already scheduled
         if (hasGame(game, scheduledGames)) {
-            console.log(game)
-            // debugger
+            // console.log(game)
             return false
         }
-        // debugger
         return true
     })
+    // debugger
     for (let i = 0; i < schedule.length; i++) {
         const week = schedule[i]
         while (week.length < gamesPerWeek) {
@@ -93,19 +86,17 @@ function addGame(season) {
             allGames.splice(gameIndex(randomGame, allGames), 1)
             if (checkGame(randomGame, season) && checkTeams(randomGame, week)) {
                 console.log('Good game found, adding game...')
+                // if (i == 13) { debugger }
                 // debugger
-                const weekResult = document.getElementById('weekResult')
-                const gameResult = document.createElement('div.gameResult')
                 week.push(randomGame)
-                gameResult.textContent = randomGame
-                weekResult.appendChild(newGame)
+                // debugger
                 // if you cannot find a good path after this add
                 if (!addGame(season)) {
                     console.log('Removing last game...')
                     // debugger
                     // undo it and try again
                     week.pop(randomGame)
-                    gameResult.remove()
+                    // debugger
                 }
             }
         }
@@ -115,7 +106,7 @@ function addGame(season) {
     console.log('Schedule complete!')
     console.log(schedule)
     // debugger
-    return season
+    return schedule
 }
 
 function findAllGames(teams) {
@@ -203,11 +194,11 @@ function checkGame(randomGame, season) {
     // if game is not divisional
     } else {
         // if teams have not played maximum non divisional games
-        if ((nonDivCount(homeTeam, scheduledGames) < maxNonDivGames)  && 
-        (nonDivCount(awayTeam, scheduledGames) < maxNonDivGames)) {
+        if ((nonDivCount(homeTeam, season) < maxNonDivGames)  && 
+        (nonDivCount(awayTeam, season) < maxNonDivGames)) {
             // and teams have not playe max home games
-            if ((homeCount(homeTeam, scheduledGames) < maxHomeGames) && 
-            (homeCount(awayTeam, scheduledGames) < maxHomeGames)) {
+            if ((homeCount(homeTeam, season) < maxHomeGames) && 
+            (homeCount(awayTeam, season) < maxHomeGames)) {
                 return true
             }
         }
@@ -217,7 +208,7 @@ function checkGame(randomGame, season) {
 }
 
 function isDivisional(game, league) {
-    console.log('Checking divisional...')
+    // console.log('Checking divisional...')
     // debugger
     const homeTeam = game[0]
     const awayTeam = game[1]
@@ -230,10 +221,13 @@ function isDivisional(game, league) {
     return false
 }
 
-function nonDivCount(team, scheduledGames) {
+function nonDivCount(team, season) {
+    // just returns number of games team is in
+    // debugger
+    const scheduledGames = season[0].flatMap()
     let count = 0
     scheduledGames.forEach(game => {
-        if (game.includes(team)) {
+        if (game.includes(team) && !isDivisional(game, season[1])) {
             count++
         }
     })
@@ -241,9 +235,11 @@ function nonDivCount(team, scheduledGames) {
 }
 
 function homeCount(team, scheduledGames) {
+    // this is not working
+    // debugger
     let count = 0
     scheduledGames.forEach(game => {
-        if (game.includes(team)) {
+        if (game.includes(team) && game[0] == team) {
             count++
         }
     })

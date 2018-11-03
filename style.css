@@ -40,11 +40,20 @@ html, body {
 }
 
 .scheduleResult {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     background-color: bisque;
     overflow-y: scroll;
 }
-/* 
+
 .weekResult {
-    
-} */
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.gameResult {
+    flex: 1;
+
+}
