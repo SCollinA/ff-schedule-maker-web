@@ -106,7 +106,7 @@ function addGame(season) {
     console.log('Schedule complete!')
     console.log(schedule)
     // debugger
-    return schedule
+    return season
 }
 
 function findAllGames(teams) {

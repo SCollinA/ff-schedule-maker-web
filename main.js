@@ -1,11 +1,19 @@
 const userOptions = document.getElementById('userOptions')
+const createScheduleButton = document.querySelector('div.submitButton > button')
 const scheduleResult = document.getElementById('scheduleResult')
+let userSeason
 
-userOptions.onsubmit = event => {
-    const numTeams = event.target.elements.numTeams.value
-    const numDivs = event.target.elements.numDivs.value
-    const numPlayoffTeams = event.target.elements.numPlayoffTeams.value
-    const schedule = makeRandomSchedule(numTeams, numDivs, numPlayoffTeams)
+createScheduleButton.addEventListener('click', event => {
+    const numTeams = userOptions[0].value
+    const numDivs = userOptions[1].value
+    const numPlayoffTeams = userOptions[2].value
+    userSeason = makeRandomSchedule(numTeams, numDivs, numPlayoffTeams)
+    drawSchedule()
+})
+
+function drawSchedule() {
+    const schedule = userSeason[0]
+    const numTeams = userSeason[1].flatMap().length
     if (scheduleResult.childElementCount > 0) {
         scheduleResult.children.forEach(week => week.remove())
     }
@@ -22,5 +30,4 @@ userOptions.onsubmit = event => {
         }
         scheduleResult.appendChild(weekResult)
     }
-    scheduleResult.textContent = 'hello'
 }
