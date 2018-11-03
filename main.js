@@ -1,4 +1,3 @@
-const submitButton = document.querySelector('div.submitButton > button')
 const userOptions = document.getElementById('userOptions')
 const scheduleResult = document.getElementById('scheduleResult')
 
@@ -22,8 +21,6 @@ userOptions.onsubmit = event => {
             weekResult.appendChild(gameResult)
         }
         scheduleResult.appendChild(weekResult)
-    }   
-    const randH3 = document.createElement('h3')
-    randH3.textContent = 'hello'
-    scheduleResult.appendChild(randH3)
+    }
+    scheduleResult.textContent = 'hello'
 }
