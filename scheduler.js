@@ -83,7 +83,7 @@ function addGame(season) {
             // debugger
             // check game
             // take it out of possible games
-            allGames.splice(gameIndex(randomGame, allGames), 1)
+            allGames.splice(indexOfGame(randomGame, allGames), 1)
             if (checkGame(randomGame, season) && checkTeams(randomGame, week)) {
                 console.log('Good game found, adding game...')
                 // if (i == 13) { debugger }
@@ -154,13 +154,13 @@ function hasGame(game, gamesArray) {
     // if game array contains game
     // return index of game in games array
     // else return false
-    if (gameIndex(game, gamesArray) >= 0) {
+    if (indexOfGame(game, gamesArray) >= 0) {
         return true
     }
     return false
 }
 
-function gameIndex(game, gamesArray) {
+function indexOfGame(game, gamesArray) {
     for (let i = 0; i < gamesArray.length; i++) {
         // if home team == home team and
         // away team == away team, same game
