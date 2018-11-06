@@ -1,21 +1,20 @@
 const userOptions = document.getElementById('userOptions')
 const createScheduleButton = document.querySelector('div.submitButton > button')
 const scheduleResult = document.getElementById('scheduleResult')
-let userSeason
 
 createScheduleButton.addEventListener('click', event => {
     const numTeams = userOptions[0].value
     const numDivs = userOptions[1].value
     const numPlayoffTeams = userOptions[2].value
-    userSeason = makeRandomSchedule(numTeams, numDivs, numPlayoffTeams)
-    drawSchedule()
+    const season = makeRandomSchedule(numTeams, numDivs, numPlayoffTeams)
+    drawSchedule(season)
 })
 
-function drawSchedule() {
-    const schedule = userSeason[0]
-    const numTeams = userSeason[1].flatMap().length
-    if (scheduleResult.childElementCount > 0) {
-        scheduleResult.children.forEach(week => week.remove())
+function drawSchedule(season) {
+    const schedule = season[0]
+    const numTeams = season[1].flatMap().length
+    while (scheduleResult.childElementCount > 0) {
+        scheduleResult.lastChild.remove()
     }
     // add appropriate elements to page
     for (let i = 0; i < schedule.length; i++) {

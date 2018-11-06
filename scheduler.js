@@ -32,6 +32,7 @@ function makeRandomSchedule(numTeams, numDivs, numPlayoffTeams) {
 }
 
 function addGame(season) {
+    // drawSchedule(season)
     console.log('Adding next game...')
     // debugger
     const league = season[1]
